@@ -61,86 +61,57 @@ bun add opencode-antigravity-auth@1.2.8
 
 ### 2.2 配置 `~/.config/opencode/opencode.json`
 
-注意：
-- OpenAI OAuth 必须使用 `opencode-openai-codex-auth` 的现代配置（`config/opencode-modern.json`，OpenCode ≥ 1.0.210）。
-- 不要设置 `api: "codex"`，否则会出现 `codex/responses` URL 错误。
-- 推荐固定插件版本（例如 `opencode-openai-codex-auth@4.3.0`）。
-- 现代配置使用 **基础模型 + variant**，例如 `openai/gpt-5.2` 搭配 `variant=high`，而不是 `openai/gpt-5.2-high` 这种拼接名称。
+推荐使用 Antigravity 自定义模型配置，支持 Gemini 3, Claude 4.5 Thinking 等模型。
 
 ```json
 {
   "$schema": "https://opencode.ai/config.json",
-  "small_model": "openai/gpt-5.2",
+  "permission": {
+    "skill": "allow"
+  },
+  "small_model": "openai/o4-mini",
   "plugin": [
-    "oh-my-opencode",
+    "oh-my-opencode@3.0.0-beta.8",
     "opencode-antigravity-auth@1.2.8",
-    "opencode-openai-codex-auth@4.3.0"
+    "opencode-openai-codex-auth"
   ],
   "provider": {
     "google": {
       "npm": "@ai-sdk/google",
       "models": {
-        "gemini-3-pro-preview": {
-          "id": "gemini-3-pro-preview",
-          "name": "3 Pro",
-          "release_date": "2025-11-18",
-          "reasoning": true,
-          "limit": { "context": 1000000, "output": 64000 },
-          "cost": { "input": 2, "output": 12, "cache_read": 0.2 },
-          "modalities": {
-            "input": ["text", "image", "video", "audio", "pdf"],
-            "output": ["text"]
-          },
+        "antigravity-gemini-3-pro": {
+          "name": "Gemini 3 Pro (Antigravity)",
+          "limit": { "context": 1048576, "output": 65535 },
+          "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] },
           "variants": {
-            "low": { "options": { "thinkingConfig": { "thinkingLevel": "low", "includeThoughts": true } } },
-            "medium": { "options": { "thinkingConfig": { "thinkingLevel": "medium", "includeThoughts": true } } },
-            "high": { "options": { "thinkingConfig": { "thinkingLevel": "high", "includeThoughts": true } } }
+            "low": { "thinkingLevel": "low" },
+            "high": { "thinkingLevel": "high" }
           }
         },
-        "gemini-3-flash": {
-          "id": "gemini-3-flash",
-          "name": "3 Flash",
-          "release_date": "2025-12-17",
-          "reasoning": true,
+        "antigravity-gemini-3-flash": {
+          "name": "Gemini 3 Flash (Antigravity)",
           "limit": { "context": 1048576, "output": 65536 },
-          "cost": { "input": 0.5, "output": 3, "cache_read": 0.05 },
-          "modalities": {
-            "input": ["text", "image", "video", "audio", "pdf"],
-            "output": ["text"]
-          },
+          "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] },
           "variants": {
-            "minimal": { "options": { "thinkingConfig": { "thinkingLevel": "minimal", "includeThoughts": true } } },
-            "low": { "options": { "thinkingConfig": { "thinkingLevel": "low", "includeThoughts": true } } },
-            "medium": { "options": { "thinkingConfig": { "thinkingLevel": "medium", "includeThoughts": true } } },
-            "high": { "options": { "thinkingConfig": { "thinkingLevel": "high", "includeThoughts": true } } }
+            "minimal": { "thinkingLevel": "minimal" },
+            "low": { "thinkingLevel": "low" },
+            "medium": { "thinkingLevel": "medium" },
+            "high": { "thinkingLevel": "high" }
           }
         },
-        "gemini-2.5-flash-lite": {
-          "id": "gemini-2.5-flash-lite",
-          "name": "2.5 Flash Lite",
-          "reasoning": false
-        },
-        "gemini-claude-sonnet-4-5-thinking": {
-          "id": "gemini-claude-sonnet-4-5-thinking",
-          "name": "Sonnet 4.5",
+        "antigravity-claude-sonnet-4-5-thinking": {
+          "name": "Claude Sonnet 4.5 Thinking (Antigravity)",
           "limit": { "context": 200000, "output": 64000 },
-          "modalities": {
-            "input": ["text", "image", "pdf"],
-            "output": ["text"]
-          },
+          "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] },
           "variants": {
             "low": { "thinkingConfig": { "thinkingBudget": 8192 } },
             "max": { "thinkingConfig": { "thinkingBudget": 32768 } }
           }
         },
-        "gemini-claude-opus-4-5-thinking": {
-          "id": "gemini-claude-opus-4-5-thinking",
-          "name": "Opus 4.5",
+        "antigravity-claude-opus-4-5-thinking": {
+          "name": "Claude Opus 4.5 Thinking (Antigravity)",
           "limit": { "context": 200000, "output": 64000 },
-          "modalities": {
-            "input": ["text", "image", "pdf"],
-            "output": ["text"]
-          },
+          "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] },
           "variants": {
             "low": { "thinkingConfig": { "thinkingBudget": 8192 } },
             "max": { "thinkingConfig": { "thinkingBudget": 32768 } }
@@ -149,40 +120,38 @@ bun add opencode-antigravity-auth@1.2.8
       }
     },
     "openai": {
+      "name": "OpenAI",
       "options": {
         "reasoningEffort": "medium",
         "reasoningSummary": "auto",
         "textVerbosity": "medium",
-        "include": [
-          "reasoning.encrypted_content"
-        ],
+        "include": ["reasoning.encrypted_content"],
         "store": false
       },
       "models": {
-        "gpt-5.2": {
-          "name": "GPT 5.2 (OAuth)",
-          "limit": { "context": 272000, "output": 128000 },
-          "modalities": { "input": ["text", "image"], "output": ["text"] },
-          "variants": {
-            "none": { "reasoningEffort": "none", "reasoningSummary": "auto", "textVerbosity": "medium" },
-            "low": { "reasoningEffort": "low", "reasoningSummary": "auto", "textVerbosity": "medium" },
-            "medium": { "reasoningEffort": "medium", "reasoningSummary": "auto", "textVerbosity": "medium" },
-            "high": { "reasoningEffort": "high", "reasoningSummary": "detailed", "textVerbosity": "medium" },
-            "xhigh": { "reasoningEffort": "xhigh", "reasoningSummary": "detailed", "textVerbosity": "medium" }
-          }
-        },
+        "gpt-5.2": { "name": "GPT-5.2" },
+        "o3": { "name": "o3", "thinking": true },
         "gpt-5.2-codex": {
-          "name": "GPT 5.2 Codex (OAuth)",
-          "limit": { "context": 272000, "output": 128000 },
+          "name": "GPT-5.2-Codex",
+          "limit": { "context": 200000, "output": 64000 },
           "modalities": { "input": ["text", "image"], "output": ["text"] },
-          "variants": {
-            "low": { "reasoningEffort": "low" },
-            "medium": { "reasoningEffort": "medium" },
-            "high": { "reasoningEffort": "high" },
-            "xhigh": { "reasoningEffort": "xhigh" }
-          }
+          "options": { "reasoningEffort": "medium", "reasoningSummary": "auto" }
         }
       }
+    }
+  },
+  "agent": {
+    "gemini": {
+      "description": "使用本地转发的 Gemini 3 Flash",
+      "mode": "primary",
+      "model": "google/antigravity-gemini-3-pro",
+      "tools": { "write": true, "edit": true, "bash": true }
+    },
+    "codex": {
+      "description": "使用 OpenAI GPT-5.2-Codex",
+      "mode": "primary",
+      "model": "openai/gpt-5.2-codex",
+      "tools": { "write": true, "edit": true, "bash": true }
     }
   }
 }
@@ -194,7 +163,7 @@ bun add opencode-antigravity-auth@1.2.8
 
 ## 第三步：配置 Oh My OpenCode Agent 模型
 
-编辑 `~/.config/opencode/oh-my-opencode.json`：
+编辑 `~/.config/opencode/oh-my-opencode.json`，使用上述配置的 Antigravity 模型：
 
 ```json
 {
@@ -202,7 +171,7 @@ bun add opencode-antigravity-auth@1.2.8
   "google_auth": false,
   "agents": {
     "Sisyphus": {
-      "model": "google/gemini-claude-opus-4-5-thinking"
+      "model": "google/antigravity-claude-opus-4-5-thinking"
     },
     "oracle": {
       "model": "openai/gpt-5.2",
@@ -211,19 +180,25 @@ bun add opencode-antigravity-auth@1.2.8
       }
     },
     "librarian": {
-      "model": "google/gemini-3-flash"
+      "model": "google/antigravity-gemini-3-flash"
     },
     "explore": {
-      "model": "google/gemini-3-flash"
+      "model": "google/antigravity-gemini-3-flash"
     },
     "frontend-ui-ux-engineer": {
-      "model": "google/gemini-3-pro-preview"
+      "model": "google/antigravity-gemini-3-pro"
     },
     "document-writer": {
-      "model": "google/gemini-3-flash"
+      "model": "google/antigravity-gemini-3-flash"
     },
     "multimodal-looker": {
-      "model": "google/gemini-3-flash"
+      "model": "google/antigravity-gemini-3-flash"
+    },
+    "Prometheus (Planner)": {
+      "model": "openai/gpt-5.2"
+    },
+    "orchestrator-sisyphus": {
+      "model": "google/antigravity-claude-sonnet-4-5-thinking"
     }
   }
 }

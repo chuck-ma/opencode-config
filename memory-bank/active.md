@@ -1,22 +1,22 @@
 # 当前状态
 
 ## 当前上下文
-我们正在配置并记录 OpenCode 设置，重点是自定义代理。
+我们正在配置并记录 OpenCode 设置。已将本地实际配置文件复制到项目根目录，正准备更新安装指南以反映这些实际配置。
 
 ## 最近进展
 - **初始化**：完成 Memory Bank 结构初始化。
+- **配置同步**：
+  - 将用户本地的 `~/.config/opencode/` 核心配置文件（`opencode.json`, `oh-my-opencode.json`, `antigravity.json`, `AGENTS.md`）复制到项目根目录。
+  - 执行安全扫描，确保无敏感信息。
 - **代理配置**：
-  - 调研 OpenCode 自定义代理配置（基于 Markdown）。
-  - 在 `~/.config/opencode/agent/` 中创建 `backend-engineer`（Python/API 方向）与 `agent-engineer`（MCP/Prompt 方向）。
-  - 配置具体工具权限（bash allow/ask 列表）以确保安全。
-- **文档**：
-  - 更新 `oh-my-opencode-setup-guide.md`，加入第 5 步：自定义代理配置。
-- **备份**：
-  - 将实际代理配置文件复制到本地 `agents/` 目录用于版本控制/参考。
+  - 在 `~/.config/opencode/agent/` 中创建 `backend-engineer` 与 `agent-engineer`。
+  - 备份配置到 `agents/` 目录。
+- **版本控制**：
+  - 建立 Git 仓库并推送到远程。
 
 ## 当前问题
-- 无。
+- 待确认：是否用实际配置覆盖 `oh-my-opencode-setup-guide.md` 中的示例配置。
 
 ## 下一步
-- 验证代理功能（由用户通过 CLI 执行）。
-- 需要时继续优化代理提示词。
+- 等待用户确认更新指南。
+- 提交新的配置文件到 Git。
