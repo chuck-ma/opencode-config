@@ -13,6 +13,16 @@
 - **版本控制**：
   - 提交所有配置文件和文档变更。
   - 推送到远程仓库 `https://github.com/chuck-ma/opencode-config.git`。
+- **插件升级 (2026-01-18)**：
+  - 升级 `opencode-antigravity-auth` 从 `1.2.8` → `1.3.0`
+  - 新增 Google Search Grounding 配置 (`web_search.default_mode: "auto"`)
+  - 新增 `keep_thinking: false` 显式配置
+  - 配置已同步到 `~/.config/opencode/`
+- **配置覆盖本地 (2026-01-18)**：
+  - 发现本地 `oh-my-opencode` 插件版本 (`beta.10`) 领先于仓库配置 (`beta.8`)。
+  - 先将仓库中的 `opencode.json` 更新为 `beta.10` 以避免回退。
+  - 将仓库配置 (`opencode.json`, `oh-my-opencode.json`, `antigravity.json`, `agents/*.md`) 覆盖到 `~/.config/opencode/`。
+  - 实现了将 Antigravity 模型配置部署到本机的目标。
 
 ## 当前问题
 - 无。
