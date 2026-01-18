@@ -23,6 +23,8 @@
   - 先将仓库中的 `opencode.json` 更新为 `beta.10` 以避免回退。
   - 将仓库配置 (`opencode.json`, `oh-my-opencode.json`, `antigravity.json`, `agents/*.md`) 覆盖到 `~/.config/opencode/`。
   - 实现了将 Antigravity 模型配置部署到本机的目标。
+- **Agent 配置更新**：
+  - `backend-engineer`：启用 `webfetch` 工具，移除严格的页脚提示。
 
 ## 当前问题
 - 无。

@@ -8,7 +8,7 @@ tools:
   write: true
   edit: true
   bash: true
-  webfetch: false
+  webfetch: true
 permission:
   bash:
     "*": ask
@@ -163,4 +163,3 @@ def create_user(request):
     return user
 ```
 
-**记住：你是来交付代码的，不是来问问题的。立即执行。**
