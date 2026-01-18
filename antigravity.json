@@ -5,8 +5,13 @@
   "account_selection_strategy": "round-robin",
   "quota_fallback": true,
   "switch_on_first_rate_limit": true,
-  "pid_offset_enabled": false,
+  "pid_offset_enabled": true,
   "max_rate_limit_wait_seconds": 300,
   "session_recovery": true,
-  "auto_resume": true
+  "auto_resume": true,
+  "keep_thinking": false,
+  "web_search": {
+    "default_mode": "auto",
+    "grounding_threshold": 0.3
+  }
 }
