@@ -1,28 +1,28 @@
 # OpenCode Config
 
-This repository tracks a working OpenCode + Oh My OpenCode configuration, including installation notes and example config files. It is intended to keep local config and documentation in sync so updates are reproducible.
+本仓库用于记录一套可用的 OpenCode + Oh My OpenCode 配置，包括安装说明与示例配置文件，确保本地配置与文档保持一致，便于复现与同步。
 
-## What is included
+## 包含内容
 
-- Install and setup guide: `oh-my-opencode-setup-guide.md`
-- OpenCode config: `opencode.json`
-- Oh My OpenCode agent config: `oh-my-opencode.json`
-- Antigravity Auth config: `antigravity.json`
-- Agent definitions: `agents/`
+- 安装与配置指南：`oh-my-opencode-setup-guide.md`
+- OpenCode 配置：`opencode.json`
+- Oh My OpenCode Agent 配置：`oh-my-opencode.json`
+- Antigravity Auth 配置：`antigravity.json`
+- 自定义 Agent 定义：`agents/`
 
-## Quick start
+## 快速开始
 
-1. Follow the steps in `oh-my-opencode-setup-guide.md`.
-2. Copy the config files into `~/.config/opencode/`.
-3. Restart OpenCode to load plugins and agents.
+1. 按 `oh-my-opencode-setup-guide.md` 完成安装。
+2. 将仓库中的配置文件复制到 `~/.config/opencode/`。
+3. 重启 OpenCode 以加载插件与 Agent。
 
-## Sync workflow
+## 同步流程
 
-- Update local config in `~/.config/opencode/`.
-- Mirror the changes into this repo.
-- Keep the setup guide aligned with the exact versions and fields.
+- 先更新 `~/.config/opencode/` 的本地配置。
+- 将变更同步到本仓库。
+- 确保指南中的版本号与字段与实际配置保持一致。
 
-## Notes
+## 备注
 
-- This repo favors real, working configurations over minimal examples.
-- If a plugin or model changes, update both the config file and the guide.
+- 本仓库强调“真实可用”的配置，而非最小示例。
+- 插件或模型更新时，需同步更新配置文件与指南。
