@@ -56,7 +56,7 @@ bunx oh-my-opencode install --no-tui --claude=max20 --chatgpt=yes --gemini=yes
 ```bash
 cd ~/.config/opencode
 
-bun add opencode-antigravity-auth@1.2.8
+bun add opencode-antigravity-auth@beta
 ```
 
 ### 2.2 配置 `~/.config/opencode/opencode.json`
@@ -71,9 +71,10 @@ bun add opencode-antigravity-auth@1.2.8
   },
   "small_model": "openai/o4-mini",
   "plugin": [
-    "oh-my-opencode@3.0.0-beta.8",
-    "opencode-antigravity-auth@1.2.8",
-    "opencode-openai-codex-auth"
+    "oh-my-opencode@3.0.0-beta.10",
+    "opencode-antigravity-auth@beta",
+    "opencode-openai-codex-auth",
+    "file:///Users/chuck/.config/opencode/plugin/memory-bank.ts"
   ],
   "provider": {
     "google": {
@@ -98,6 +99,11 @@ bun add opencode-antigravity-auth@1.2.8
             "medium": { "thinkingLevel": "medium" },
             "high": { "thinkingLevel": "high" }
           }
+        },
+        "antigravity-claude-sonnet-4-5": {
+          "name": "Claude Sonnet 4.5 (no thinking) (Antigravity)",
+          "limit": { "context": 200000, "output": 64000 },
+          "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] }
         },
         "antigravity-claude-sonnet-4-5-thinking": {
           "name": "Claude Sonnet 4.5 Thinking (Antigravity)",
@@ -131,6 +137,7 @@ bun add opencode-antigravity-auth@1.2.8
       "models": {
         "gpt-5.2": { "name": "GPT-5.2" },
         "o3": { "name": "o3", "thinking": true },
+        "o4-mini": { "name": "o4-mini", "thinking": true },
         "gpt-5.2-codex": {
           "name": "GPT-5.2-Codex",
           "limit": { "context": 200000, "output": 64000 },
@@ -252,7 +259,7 @@ opencode auth login
 |--------|--------|------|
 | `quota_fallback` | `false` | Gemini 限速时自动尝试备用配额池（Antigravity ↔ Gemini CLI） |
 | `switch_on_first_rate_limit` | `true` | 首次 429 限速立即切换账号 |
-| `pid_offset_enabled` | `false` | 多会话时用 PID 偏移分散负载 |
+| `pid_offset_enabled` | `true` | 多会话时用 PID 偏移分散负载 |
 | `max_rate_limit_wait_seconds` | `300` | 限速最大等待时间（0=无限） |
 
 #### 完整配置示例
@@ -265,10 +272,15 @@ opencode auth login
   "account_selection_strategy": "round-robin",
   "quota_fallback": true,
   "switch_on_first_rate_limit": true,
-  "pid_offset_enabled": false,
+  "pid_offset_enabled": true,
   "max_rate_limit_wait_seconds": 300,
   "session_recovery": true,
-  "auto_resume": true
+  "auto_resume": true,
+  "keep_thinking": false,
+  "web_search": {
+    "default_mode": "auto",
+    "grounding_threshold": 0.3
+  }
 }
 ```
 
