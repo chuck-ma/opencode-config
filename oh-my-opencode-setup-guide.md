@@ -232,6 +232,8 @@ opencode auth login
 
 账号存储在 `~/.config/opencode/antigravity-accounts.json`。
 
+> **注意**：Antigravity-Manager 目前不支持 OpenCode 配置（仅支持 Antigravity CLI）。
+
 ### 4.2 创建 `~/.config/opencode/antigravity.json`
 
 ```json
