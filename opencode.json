@@ -429,6 +429,22 @@
           }
         }
       }
+    },
+    "antigravity_manager": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Antigravity Manager",
+      "options": {
+        "baseURL": "http://127.0.0.1:8045/v1",
+        "apiKey": "${ANTIGRAVITY_MANAGER_API_KEY}"
+      },
+      "models": {
+        "claude-opus-4-5-thinking": {
+          "name": "Claude Opus 4.5 Thinking"
+        },
+        "claude-sonnet-4-5-thinking": {
+          "name": "Claude Sonnet 4.5 Thinking"
+        }
+      }
     }
   },
   "agent": {
@@ -446,6 +462,16 @@
       "description": "使用 OpenAI GPT-5.2-Codex",
       "mode": "primary",
       "model": "openai/gpt-5.2-codex",
+      "tools": {
+        "write": true,
+        "edit": true,
+        "bash": true
+      }
+    },
+    "claude": {
+      "description": "使用 Antigravity Manager Claude 4.5 Thinking",
+      "mode": "primary",
+      "model": "antigravity_manager/claude-opus-4-5-thinking",
       "tools": {
         "write": true,
         "edit": true,
