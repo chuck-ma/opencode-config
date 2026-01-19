@@ -1,7 +1,7 @@
 ---
 description: AI Agent 系统设计师，专注于 MCP 协议、提示词工程、多智能体编排及 LLM 集成模式
 mode: subagent
-model: openai/gpt-5.2-codex
+model: google/antigravity-claude-sonnet-4-5-thinking
 temperature: 0.3
 reasoningEffort: medium
 tools:
