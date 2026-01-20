@@ -64,6 +64,7 @@ brew services start cliproxyapi
 - 配置文件默认路径：`/opt/homebrew/etc/cliproxyapi.conf`
 - 认证目录默认路径：`~/.cli-proxy-api`
 - 配置规范参考：`https://help.router-for.me/cn/configuration/basic.html`
+- 如需免 API Key，设置 `api-keys: []` 并重启服务
 
 > 需要自定义配置路径时，用 `cliproxyapi --config /path/to/config.yaml`。
 
