@@ -25,6 +25,8 @@
   - 实现了将 Antigravity 模型配置部署到本机的目标。
 - **Agent 配置更新**：
   - `backend-engineer`：启用 `webfetch` 工具，移除严格的页脚提示。
+- **文档补充 (2026-01-20)**：
+  - 记录 OpenCode 会话管理命令 (`list`, `export`, `TUI`) 到 `learnings/opencode-session-management.md`。
 
 ## 当前问题
 - 无。
