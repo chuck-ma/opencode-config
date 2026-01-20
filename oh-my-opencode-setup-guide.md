@@ -125,13 +125,21 @@ bun add opencode-antigravity-auth@beta
           "id": "gemini-claude-sonnet-4-5-thinking",
           "name": "Gemini Claude Sonnet 4.5 Thinking",
           "cost": { "input": 3.0, "output": 15.0 },
-          "limit": { "context": 200000, "output": 64000 }
+          "limit": { "context": 200000, "output": 64000 },
+          "variants": {
+            "low": { "thinkingConfig": { "thinkingBudget": 8192 } },
+            "high": { "thinkingConfig": { "thinkingBudget": 32768 } }
+          }
         },
         "gemini-claude-opus-4-5-thinking": {
           "id": "gemini-claude-opus-4-5-thinking",
           "name": "Gemini Claude Opus 4.5 Thinking",
           "cost": { "input": 15.0, "output": 25.0 },
-          "limit": { "context": 200000, "output": 64000 }
+          "limit": { "context": 200000, "output": 64000 },
+          "variants": {
+            "low": { "thinkingConfig": { "thinkingBudget": 8192 } },
+            "high": { "thinkingConfig": { "thinkingBudget": 32768 } }
+          }
         }
       }
     },
