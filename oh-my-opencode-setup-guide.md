@@ -48,10 +48,46 @@ bunx oh-my-opencode install --no-tui --claude=max20 --chatgpt=yes --gemini=yes
 
 ---
 
-## 第二步：配置 Antigravity Auth 插件
+## 第二步：安装 CLIProxyAPI（本地 Claude/Gemini 代理）
+
+CLIProxyAPI 用于本地转发 Claude 4.5（以及其他模型），提供 OpenAI-compatible 接口。
+
+### 2.1 安装与启动（Homebrew 推荐）
+
+```bash
+brew install cliproxyapi
+brew services start cliproxyapi
+```
+
+### 2.2 配置文件与鉴权
+
+- 配置文件默认路径：`/opt/homebrew/etc/cliproxyapi.conf`
+- 认证目录默认路径：`~/.cli-proxy-api`
+- 配置规范参考：`https://help.router-for.me/cn/configuration/basic.html`
+
+> 需要自定义配置路径时，用 `cliproxyapi --config /path/to/config.yaml`。
+
+### 2.3 端口与验证
+
+- 代理端口：`http://localhost:8317/v1`
+- 建议配置 API Key 后再接入 OpenCode
+
+### 2.4 其他安装方式（可选）
+
+```bash
+git clone https://github.com/router-for-me/CLIProxyAPI.git
+cd CLIProxyAPI
+cp config.example.yaml config.yaml
+go build -o cli-proxy-api ./cmd/server
+./cli-proxy-api --config config.yaml
+```
+
+---
+
+## 第三步：配置 Antigravity Auth 插件
 
 
-### 2.1 安装插件
+### 3.1 安装插件
 
 ```bash
 cd ~/.config/opencode
@@ -59,7 +95,7 @@ cd ~/.config/opencode
 bun add opencode-antigravity-auth@beta
 ```
 
-### 2.2 配置 `~/.config/opencode/opencode.json`
+### 3.2 配置 `~/.config/opencode/opencode.json`
 
 推荐使用 Antigravity 自定义模型配置，支持 Gemini 3, Claude 4.5 Thinking 等模型。
 
@@ -71,12 +107,33 @@ bun add opencode-antigravity-auth@beta
   },
   "small_model": "openai/o4-mini",
   "plugin": [
-    "oh-my-opencode@3.0.0-beta.10",
+    "oh-my-opencode@3.0.0-beta.11",
     "opencode-antigravity-auth@beta",
     "opencode-openai-codex-auth",
     "file:///Users/chuck/.config/opencode/plugin/memory-bank.ts"
   ],
   "provider": {
+    "cliproxyapi": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "CLIProxyAPI",
+      "options": {
+        "baseURL": "http://localhost:8317/v1"
+      },
+      "models": {
+        "gemini-claude-sonnet-4-5-thinking": {
+          "id": "gemini-claude-sonnet-4-5-thinking",
+          "name": "Gemini Claude Sonnet 4.5 Thinking",
+          "cost": { "input": 3.0, "output": 15.0 },
+          "limit": { "context": 200000, "output": 64000 }
+        },
+        "gemini-claude-opus-4-5-thinking": {
+          "id": "gemini-claude-opus-4-5-thinking",
+          "name": "Gemini Claude Opus 4.5 Thinking",
+          "cost": { "input": 15.0, "output": 25.0 },
+          "limit": { "context": 200000, "output": 64000 }
+        }
+      }
+    },
     "google": {
       "npm": "@ai-sdk/google",
       "models": {
@@ -159,6 +216,12 @@ bun add opencode-antigravity-auth@beta
       "mode": "primary",
       "model": "openai/gpt-5.2-codex",
       "tools": { "write": true, "edit": true, "bash": true }
+    },
+    "claude": {
+      "description": "使用 CLIProxyAPI Claude 4.5 Thinking",
+      "mode": "primary",
+      "model": "cliproxyapi/gemini-claude-opus-4-5-thinking",
+      "tools": { "write": true, "edit": true, "bash": true }
     }
   }
 }
@@ -168,7 +231,7 @@ bun add opencode-antigravity-auth@beta
 
 ---
 
-## 第三步：配置 Oh My OpenCode Agent 模型
+## 第四步：配置 Oh My OpenCode Agent 模型
 
 编辑 `~/.config/opencode/oh-my-opencode.json`，使用上述配置的 Antigravity 模型：
 
@@ -215,7 +278,7 @@ bun add opencode-antigravity-auth@beta
 
 ---
 
-## 第四步：配置多账号轮询调度（可选）
+## 第五步：配置多账号轮询调度（可选）
 
 当你有多个 Google 账号时，可以启用多账号轮询调度，实现：
 
@@ -290,11 +353,11 @@ opencode auth login
 
 ---
 
-## 第五步：自定义 Agent 配置
+## 第六步：自定义 Agent 配置
 
 除了在 `oh-my-opencode.json` 中配置内置 Agent，你还可以通过 Markdown 文件创建自定义 Agent。
 
-### 5.1 创建 Agent 定义文件
+### 6.1 创建 Agent 定义文件
 
 在 `~/.config/opencode/agent/` 目录下创建 Markdown 文件即可定义 Agent。文件头部 Frontmatter 定义元数据，正文定义 System Prompt。
 
@@ -360,7 +423,7 @@ permission:
 You are an expert in AI agent systems...
 ```
 
-### 5.2 使用方法
+### 6.2 使用方法
 
 重启 OpenCode 后，自定义 Agent 会自动加载。
 
@@ -373,4 +436,3 @@ You are an expert in AI agent systems...
    ```python
    sisyphus_task(subagent_type="agent-engineer", prompt="编写一个用于搜索代码的 MCP Tool 定义")
    ```
-
