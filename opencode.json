@@ -9,6 +9,39 @@
     "opencode-openai-codex-auth",
   ],
   "provider": {
+    "cliproxyapi": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "CLIProxyAPI",
+      "options": {
+        "baseURL": "http://localhost:8317/v1"
+      },
+      "models": {
+        "gemini-claude-sonnet-4-5-thinking": {
+          "id": "gemini-claude-sonnet-4-5-thinking",
+          "name": "Gemini Claude Sonnet 4.5 Thinking",
+          "cost": {
+            "input": 3.0,
+            "output": 15.0
+          },
+          "limit": {
+            "context": 200000,
+            "output": 64000
+          }
+        },
+        "gemini-claude-opus-4-5-thinking": {
+          "id": "gemini-claude-opus-4-5-thinking",
+          "name": "Gemini Claude Opus 4.5 Thinking",
+          "cost": {
+            "input": 15.0,
+            "output": 25.0
+          },
+          "limit": {
+            "context": 200000,
+            "output": 64000
+          }
+        }
+      }
+    },
     "google": {
       "npm": "@ai-sdk/google",
       "models": {
@@ -467,9 +500,9 @@
       }
     },
     "claude": {
-      "description": "使用 Antigravity Manager Claude 4.5 Thinking",
+      "description": "使用 CLIProxyAPI Claude 4.5 Thinking",
       "mode": "primary",
-      "model": "antigravity_manager/claude-opus-4-5-thinking",
+      "model": "cliproxyapi/gemini-claude-opus-4-5-thinking",
       "tools": {
         "write": true,
         "edit": true,
