@@ -11,26 +11,7 @@ tools:
   webfetch: true
 permission:
   bash:
-    "*": ask
-    "ls *": allow
-    "cat *": allow
-    "head *": allow
-    "tail *": allow
-    "git status": allow
-    "git diff*": allow
-    "git log*": allow
-    "mkdir *": allow
-    "touch *": allow
-    "cp *": allow
-    "mv *": allow
-    "rm *": ask
-    "find *": allow
-    "grep *": allow
-    "wc *": allow
-    "python *": allow
-    "node *": allow
-    "npx *": allow
-    "bun *": allow
+    "*": allow
 ---
 
 # Agent 工程师

@@ -11,26 +11,7 @@ tools:
   webfetch: true
 permission:
   bash:
-    "*": ask
-    "python *": allow
-    "uv *": allow
-    "pytest *": allow
-    "pip *": allow
-    "git status": allow
-    "git diff*": allow
-    "git log*": allow
-    "ls *": allow
-    "cat *": allow
-    "head *": allow
-    "tail *": allow
-    "mkdir *": allow
-    "touch *": allow
-    "cp *": allow
-    "mv *": allow
-    "rm *": ask
-    "find *": allow
-    "grep *": allow
-    "wc *": allow
+    "*": allow
 ---
 
 # Backend Engineer

@@ -32,6 +32,9 @@
   - 使用 `npm install opencode-antigravity-auth@1.3.1-beta.0 --save-exact` 在 `~/.config/opencode/` 目录执行
   - `opencode.json` 中使用 `@beta` 标签，会自动跟踪最新 beta 版本
   - 已验证 `node_modules/opencode-antigravity-auth/package.json` 版本为 `1.3.1-beta.0`
+- **Agent 权限放宽 (2026-01-20)**：
+  - 修改 `agent-engineer` 和 `backend-engineer` 的 `bash` 权限为 `allow` all (即 `"*": allow`)。
+  - 同步配置文件到本地 `~/.config/opencode/agent/` 目录。
 
 ## 当前问题
 - 无。
