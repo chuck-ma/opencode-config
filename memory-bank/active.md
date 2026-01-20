@@ -27,6 +27,11 @@
   - `backend-engineer`：启用 `webfetch` 工具，移除严格的页脚提示。
 - **文档补充 (2026-01-20)**：
   - 记录 OpenCode 会话管理命令 (`list`, `export`, `TUI`) 到 `learnings/opencode-session-management.md`。
+- **插件升级 (2026-01-20)**：
+  - 升级 `opencode-antigravity-auth` 从 `1.2.8` → `1.3.1-beta.0`
+  - 使用 `npm install opencode-antigravity-auth@1.3.1-beta.0 --save-exact` 在 `~/.config/opencode/` 目录执行
+  - `opencode.json` 中使用 `@beta` 标签，会自动跟踪最新 beta 版本
+  - 已验证 `node_modules/opencode-antigravity-auth/package.json` 版本为 `1.3.1-beta.0`
 
 ## 当前问题
 - 无。
