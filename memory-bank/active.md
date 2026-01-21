@@ -35,6 +35,10 @@
 - **Agent 权限放宽 (2026-01-20)**：
   - 修改 `agent-engineer` 和 `backend-engineer` 的 `bash` 权限为 `allow` all (即 `"*": allow`)。
   - 同步配置文件到本地 `~/.config/opencode/agent/` 目录。
+- **配置同步 (v5.3.0)**：
+  - 更新 `opencode.json` 和 `oh-my-opencode-setup-guide.md` 以反映 `memory-bank-skill` 的安装方式变更。
+  - 从 `file://...` 本地路径引用改为 npm 包引用 `"memory-bank-skill"`。
+  - 已在本地验证安装。
 
 ## 当前问题
 - 无。
