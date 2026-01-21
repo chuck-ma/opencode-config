@@ -7,6 +7,7 @@
     "oh-my-opencode@3.0.0-beta.11",
     "opencode-antigravity-auth@beta",
     "opencode-openai-codex-auth",
+    "memory-bank-skill"
   ],
   "provider": {
     "cliproxyapi": {

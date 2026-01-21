@@ -111,7 +111,7 @@ bun add opencode-antigravity-auth@beta
     "oh-my-opencode@3.0.0-beta.11",
     "opencode-antigravity-auth@beta",
     "opencode-openai-codex-auth",
-    "file:///Users/chuck/.config/opencode/plugin/memory-bank.ts"
+    "memory-bank-skill"
   ],
   "provider": {
     "cliproxyapi": {
