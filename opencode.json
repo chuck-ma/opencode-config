@@ -1,73 +1,16 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "model": "google/antigravity-claude-sonnet-4-5-thinking",
+  "model": "anthropic/claude-sonnet-4-5-thinking",
   "permission": {
     "skill": "allow"
   },
   "plugin": [
-    "oh-my-opencode@3.0.0-beta.11",
+    "oh-my-opencode@3.0.0-beta.12",
     "opencode-antigravity-auth@beta",
     "opencode-openai-codex-auth",
     "memory-bank-skill"
   ],
   "provider": {
-    "cliproxyapi": {
-      "npm": "@ai-sdk/openai-compatible",
-      "name": "CLIProxyAPI",
-      "options": {
-        "baseURL": "http://localhost:8317/v1"
-      },
-      "models": {
-        "gemini-claude-sonnet-4-5-thinking": {
-          "id": "gemini-claude-sonnet-4-5-thinking",
-          "name": "Gemini Claude Sonnet 4.5 Thinking",
-          "cost": {
-            "input": 3.0,
-            "output": 15.0
-          },
-          "limit": {
-            "context": 200000,
-            "output": 64000
-          },
-          "variants": {
-            "low": {
-              "thinkingConfig": {
-                "thinkingBudget": 8192
-              }
-            },
-            "high": {
-              "thinkingConfig": {
-                "thinkingBudget": 32768
-              }
-            }
-          }
-        },
-        "gemini-claude-opus-4-5-thinking": {
-          "id": "gemini-claude-opus-4-5-thinking",
-          "name": "Gemini Claude Opus 4.5 Thinking",
-          "cost": {
-            "input": 15.0,
-            "output": 25.0
-          },
-          "limit": {
-            "context": 200000,
-            "output": 64000
-          },
-          "variants": {
-            "low": {
-              "thinkingConfig": {
-                "thinkingBudget": 8192
-              }
-            },
-            "high": {
-              "thinkingConfig": {
-                "thinkingBudget": 32768
-              }
-            }
-          }
-        }
-      }
-    },
     "google": {
       "npm": "@ai-sdk/google",
       "models": {
@@ -487,8 +430,8 @@
         }
       }
     },
-    "antigravity_manager": {
-      "npm": "@ai-sdk/openai-compatible",
+    "anthropic": {
+      "npm": "@ai-sdk/anthropic",
       "name": "Antigravity Manager",
       "options": {
         "baseURL": "http://127.0.0.1:8045/v1",
@@ -496,10 +439,40 @@
       },
       "models": {
         "claude-opus-4-5-thinking": {
-          "name": "Claude Opus 4.5 Thinking"
+          "name": "Claude Opus 4.5 Thinking",
+	  "attachment": true,
+          "limit": {
+            "context": 1048576,
+            "output": 65535
+          },
+          "modalities": {
+            "input": [
+              "text",
+              "image",
+              "pdf"
+            ],
+            "output": [
+              "text"
+            ]
+          }
         },
         "claude-sonnet-4-5-thinking": {
-          "name": "Claude Sonnet 4.5 Thinking"
+          "name": "Claude Sonnet 4.5 Thinking",
+	  "attachment": true,
+          "limit": {
+            "context": 1048576,
+            "output": 65535
+          },
+          "modalities": {
+            "input": [
+              "text",
+              "image",
+              "pdf"
+            ],
+            "output": [
+              "text"
+            ]
+          }
         }
       }
     }
@@ -526,9 +499,9 @@
       }
     },
     "claude": {
-      "description": "使用 CLIProxyAPI Claude 4.5 Thinking",
+      "description": "使用 Antigravity Manager Claude 4.5 Thinking",
       "mode": "primary",
-      "model": "cliproxyapi/gemini-claude-opus-4-5-thinking",
+      "model": "anthropic/claude-opus-4-5-thinking",
       "tools": {
         "write": true,
         "edit": true,
