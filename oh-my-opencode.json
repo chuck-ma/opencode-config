@@ -9,7 +9,7 @@
       "model": "google/antigravity-gemini-3-flash"
     },
     "explore": {
-      "model": ""
+      "model": "google/antigravity-gemini-3-flash"
     },
     "frontend-ui-ux-engineer": {
       "model": "google/antigravity-gemini-3-flash"
