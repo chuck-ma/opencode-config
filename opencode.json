@@ -1,5 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "model": "google/antigravity-claude-sonnet-4-5-thinking",
   "permission": {
     "skill": "allow"
   },
