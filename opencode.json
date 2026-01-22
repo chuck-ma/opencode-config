@@ -144,5 +144,10 @@
       }
     }
   },
-  "agent": {}
+  "agent": {
+    "codex": {
+      "model": "openai/gpt-5.2-codex"
+
+    }
+  }
 }
