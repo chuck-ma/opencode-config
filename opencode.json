@@ -1,6 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "model": "anthropic/claude-sonnet-4-5-thinking",
+  "model": "google/antigravity-claude-sonnet-4-5-thinking",
   "permission": {
     "skill": "allow"
   },
@@ -378,7 +378,62 @@
       },
       "models": {
         "gpt-5.2": {
-          "name": "GPT-5.2"
+          "name": "GPT 5.2 (OAuth)",
+          "limit": {
+            "context": 272000,
+            "output": 128000
+          },
+          "modalities": {
+            "input": [
+              "text",
+              "image"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "options": {
+            "reasoningEffort": "medium",
+            "reasoningSummary": "auto",
+            "textVerbosity": "medium"
+          },
+          "variants": {
+            "none": {
+              "options": {
+                "reasoningEffort": "none",
+                "reasoningSummary": "auto",
+                "textVerbosity": "medium"
+              }
+            },
+            "low": {
+              "options": {
+                "reasoningEffort": "low",
+                "reasoningSummary": "auto",
+                "textVerbosity": "medium"
+              }
+            },
+            "medium": {
+              "options": {
+                "reasoningEffort": "medium",
+                "reasoningSummary": "auto",
+                "textVerbosity": "medium"
+              }
+            },
+            "high": {
+              "options": {
+                "reasoningEffort": "high",
+                "reasoningSummary": "detailed",
+                "textVerbosity": "medium"
+              }
+            },
+            "xhigh": {
+              "options": {
+                "reasoningEffort": "xhigh",
+                "reasoningSummary": "detailed",
+                "textVerbosity": "medium"
+              }
+            }
+          }
         },
         "o3": {
           "name": "o3",
@@ -441,6 +496,7 @@
         "claude-opus-4-5-thinking": {
           "name": "Claude Opus 4.5 Thinking",
 	  "attachment": true,
+	  "thinking": true,
           "limit": {
             "context": 1048576,
             "output": 65535
@@ -459,6 +515,7 @@
         "claude-sonnet-4-5-thinking": {
           "name": "Claude Sonnet 4.5 Thinking",
 	  "attachment": true,
+	  "thinking": true,
           "limit": {
             "context": 1048576,
             "output": 65535
