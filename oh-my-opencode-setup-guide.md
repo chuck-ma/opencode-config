@@ -100,188 +100,57 @@ bun add opencode-antigravity-auth@beta
 
 推荐使用 Antigravity 自定义模型配置，支持 Gemini 3, Claude 4.5 Thinking 等模型。
 
-```json
-{
-  "$schema": "https://opencode.ai/config.json",
-  "permission": {
-    "skill": "allow"
-  },
-  "small_model": "openai/o4-mini",
-  "plugin": [
-    "oh-my-opencode@3.0.0-beta.11",
-    "opencode-antigravity-auth@beta",
-    "opencode-openai-codex-auth",
-    "memory-bank-skill"
-  ],
-  "provider": {
-    "cliproxyapi": {
-      "npm": "@ai-sdk/openai-compatible",
-      "name": "CLIProxyAPI",
-      "options": {
-        "baseURL": "http://localhost:8317/v1"
-      },
-      "models": {
-        "gemini-claude-sonnet-4-5-thinking": {
-          "id": "gemini-claude-sonnet-4-5-thinking",
-          "name": "Gemini Claude Sonnet 4.5 Thinking",
-          "cost": { "input": 3.0, "output": 15.0 },
-          "limit": { "context": 200000, "output": 64000 },
-          "variants": {
-            "low": { "thinkingConfig": { "thinkingBudget": 8192 } },
-            "high": { "thinkingConfig": { "thinkingBudget": 32768 } }
-          }
-        },
-        "gemini-claude-opus-4-5-thinking": {
-          "id": "gemini-claude-opus-4-5-thinking",
-          "name": "Gemini Claude Opus 4.5 Thinking",
-          "cost": { "input": 15.0, "output": 25.0 },
-          "limit": { "context": 200000, "output": 64000 },
-          "variants": {
-            "low": { "thinkingConfig": { "thinkingBudget": 8192 } },
-            "high": { "thinkingConfig": { "thinkingBudget": 32768 } }
-          }
-        }
-      }
-    },
-    "google": {
-      "npm": "@ai-sdk/google",
-      "models": {
-        "antigravity-gemini-3-pro": {
-          "name": "Gemini 3 Pro (Antigravity)",
-          "limit": { "context": 1048576, "output": 65535 },
-          "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] },
-          "variants": {
-            "low": { "thinkingLevel": "low" },
-            "high": { "thinkingLevel": "high" }
-          }
-        },
-        "antigravity-gemini-3-flash": {
-          "name": "Gemini 3 Flash (Antigravity)",
-          "limit": { "context": 1048576, "output": 65536 },
-          "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] },
-          "variants": {
-            "minimal": { "thinkingLevel": "minimal" },
-            "low": { "thinkingLevel": "low" },
-            "medium": { "thinkingLevel": "medium" },
-            "high": { "thinkingLevel": "high" }
-          }
-        },
-        "antigravity-claude-sonnet-4-5": {
-          "name": "Claude Sonnet 4.5 (no thinking) (Antigravity)",
-          "limit": { "context": 200000, "output": 64000 },
-          "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] }
-        },
-        "antigravity-claude-sonnet-4-5-thinking": {
-          "name": "Claude Sonnet 4.5 Thinking (Antigravity)",
-          "limit": { "context": 200000, "output": 64000 },
-          "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] },
-          "variants": {
-            "low": { "thinkingConfig": { "thinkingBudget": 8192 } },
-            "max": { "thinkingConfig": { "thinkingBudget": 32768 } }
-          }
-        },
-        "antigravity-claude-opus-4-5-thinking": {
-          "name": "Claude Opus 4.5 Thinking (Antigravity)",
-          "limit": { "context": 200000, "output": 64000 },
-          "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] },
-          "variants": {
-            "low": { "thinkingConfig": { "thinkingBudget": 8192 } },
-            "max": { "thinkingConfig": { "thinkingBudget": 32768 } }
-          }
-        }
-      }
-    },
-    "openai": {
-      "name": "OpenAI",
-      "options": {
-        "reasoningEffort": "medium",
-        "reasoningSummary": "auto",
-        "textVerbosity": "medium",
-        "include": ["reasoning.encrypted_content"],
-        "store": false
-      },
-      "models": {
-        "gpt-5.2": { "name": "GPT-5.2" },
-        "o3": { "name": "o3", "thinking": true },
-        "o4-mini": { "name": "o4-mini", "thinking": true },
-        "gpt-5.2-codex": {
-          "name": "GPT-5.2-Codex",
-          "limit": { "context": 200000, "output": 64000 },
-          "modalities": { "input": ["text", "image"], "output": ["text"] },
-          "options": { "reasoningEffort": "medium", "reasoningSummary": "auto" }
-        }
-      }
-    }
-  },
-  "agent": {
-    "gemini": {
-      "description": "使用本地转发的 Gemini 3 Flash",
-      "mode": "primary",
-      "model": "google/antigravity-gemini-3-pro",
-      "tools": { "write": true, "edit": true, "bash": true }
-    },
-    "codex": {
-      "description": "使用 OpenAI GPT-5.2-Codex",
-      "mode": "primary",
-      "model": "openai/gpt-5.2-codex",
-      "tools": { "write": true, "edit": true, "bash": true }
-    },
-    "claude": {
-      "description": "使用 CLIProxyAPI Claude 4.5 Thinking",
-      "mode": "primary",
-      "model": "cliproxyapi/gemini-claude-opus-4-5-thinking",
-      "tools": { "write": true, "edit": true, "bash": true }
-    }
-  }
-}
+完整模型清单以本仓库 `opencode.json` 为准。
+
+---
+
+## 第三步 B（可选）：配置 Antigravity Manager
+
+Antigravity Manager 是一个本地代理服务，可以转发 Claude 请求并支持 Extended Thinking 功能。
+
+### 3B.1 启动 Antigravity Manager
+
+确保 Antigravity Manager 服务运行在 `http://127.0.0.1:8045`。
+
+### 3B.2 设置环境变量
+
+```bash
+export ANTIGRAVITY_MANAGER_API_KEY="your-api-key"
 ```
 
-完整模型清单以 `opencode-modern.json` 为准。
+### 3B.3 配置说明
+
+在 `opencode.json` 的 `provider` 中添加 `antigravity_manager` 配置：
+
+- **npm**: 使用 `@ai-sdk/anthropic` SDK
+- **baseURL**: 指向本地 Antigravity Manager 服务
+- **thinking 配置**: 使用 Anthropic SDK 格式 `{ "type": "enabled", "budgetTokens": N }`
+
+**重要**: Anthropic SDK 的 thinking 配置格式与 Google SDK 不同：
+
+| SDK | 格式 |
+|-----|------|
+| `@ai-sdk/anthropic` | `"thinking": { "type": "enabled", "budgetTokens": 10000 }` |
+| `@ai-sdk/google` | `"thinkingConfig": { "thinkingBudget": 10000, "includeThoughts": true }` |
+
+### 3B.4 可用模型
+
+| 模型 | 说明 | Variants |
+|------|------|----------|
+| `claude-opus-4-5-thinking` | Claude Opus 4.5 with Extended Thinking | `low` (8K), `max` (32K) |
+| `claude-sonnet-4-5-thinking` | Claude Sonnet 4.5 with Extended Thinking | `low` (8K), `medium` (16K), `high` (32K) |
+
+### 3B.5 使用示例
+
+完整配置参见本仓库 `opencode.json`。
 
 ---
 
 ## 第四步：配置 Oh My OpenCode Agent 模型
 
-编辑 `~/.config/opencode/oh-my-opencode.json`，使用上述配置的 Antigravity 模型：
+编辑 `~/.config/opencode/oh-my-opencode.json`，配置各 Agent 使用的模型。
 
-```json
-{
-  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-opencode/master/assets/oh-my-opencode.schema.json",
-  "google_auth": false,
-  "agents": {
-    "Sisyphus": {
-      "model": "google/antigravity-claude-opus-4-5-thinking"
-    },
-    "oracle": {
-      "model": "openai/gpt-5.2",
-      "options": {
-        "reasoningEffort": "high"
-      }
-    },
-    "librarian": {
-      "model": "google/antigravity-gemini-3-flash"
-    },
-    "explore": {
-      "model": "google/antigravity-gemini-3-flash"
-    },
-    "frontend-ui-ux-engineer": {
-      "model": "google/antigravity-gemini-3-pro"
-    },
-    "document-writer": {
-      "model": "google/antigravity-gemini-3-flash"
-    },
-    "multimodal-looker": {
-      "model": "google/antigravity-gemini-3-flash"
-    },
-    "Prometheus (Planner)": {
-      "model": "openai/gpt-5.2"
-    },
-    "orchestrator-sisyphus": {
-      "model": "google/antigravity-claude-sonnet-4-5-thinking"
-    }
-  }
-}
-```
+完整配置参见本仓库 `oh-my-opencode.json`。
 
 如需强推理：在 Agent 的 `options` 里使用 `reasoningEffort: "high"` 或 `xhigh`。
 
