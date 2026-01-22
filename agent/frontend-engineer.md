@@ -1,8 +1,7 @@
 ---
 description: 前端系统专家，专注于 React/Vue/Next.js、CSS/Tailwind、TypeScript、状态管理及性能优化
 mode: subagent
-model: google/antigravity-claude-sonnet-4-5-thinking
-temperature: 0.2
+model: google/gemini-3-flash-preview
 reasoningEffort: medium
 tools:
   write: true
