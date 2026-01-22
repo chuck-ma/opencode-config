@@ -31,6 +31,61 @@
         }
       }
     },
+    "antigravity_manager": {
+      "npm": "@ai-sdk/anthropic",
+      "name": "Antigravity Manager",
+      "options": {
+        "baseURL": "http://127.0.0.1:8045/v1",
+        "apiKey": "${ANTIGRAVITY_MANAGER_API_KEY}"
+      },
+      "models": {
+        "claude-opus-4-5-thinking": {
+          "name": "Claude Opus 4.5 Thinking",
+          "thinking": true,
+          "limit": { "context": 200000, "output": 64000 },
+          "options": {
+            "thinking": { "type": "enabled", "budgetTokens": 10000 }
+          },
+          "variants": {
+            "low": {
+              "options": {
+                "thinking": { "type": "enabled", "budgetTokens": 8192 }
+              }
+            },
+            "max": {
+              "options": {
+                "thinking": { "type": "enabled", "budgetTokens": 32768 }
+              }
+            }
+          }
+        },
+        "claude-sonnet-4-5-thinking": {
+          "name": "Claude Sonnet 4.5 Thinking",
+          "thinking": true,
+          "limit": { "context": 200000, "output": 64000 },
+          "options": {
+            "thinking": { "type": "enabled", "budgetTokens": 10000 }
+          },
+          "variants": {
+            "low": {
+              "options": {
+                "thinking": { "type": "enabled", "budgetTokens": 8192 }
+              }
+            },
+            "medium": {
+              "options": {
+                "thinking": { "type": "enabled", "budgetTokens": 16384 }
+              }
+            },
+            "high": {
+              "options": {
+                "thinking": { "type": "enabled", "budgetTokens": 32768 }
+              }
+            }
+          }
+        }
+      }
+    },
     "openai": {
       "name": "OpenAI",
       "options": {
@@ -242,6 +297,16 @@
     },
     "claude-anti": {
       "model": "google/antigravity-claude-opus-4-5-thinking"
+    },
+    "claude": {
+      "description": "使用 Claude 4.5 Thinking",
+      "mode": "primary",
+      "model": "antigravity_manager/claude-opus-4-5-thinking",
+      "tools": {
+        "write": true,
+        "edit": true,
+        "bash": true
+      }
     }
   }
 }
