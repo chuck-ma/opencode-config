@@ -5,7 +5,7 @@
     "skill": "allow"
   },
   "plugin": [
-    "oh-my-opencode@3.0.0-beta.12",
+    "oh-my-opencode@3.0.0-beta.13",
     "opencode-openai-codex-auth",
     "memory-bank-skill",
     "opencode-antigravity-auth@beta"
@@ -32,10 +32,10 @@
       }
     },
     "antigravity_manager": {
-      "npm": "@ai-sdk/anthropic",
+      "npm": "@ai-sdk/google",
       "name": "Antigravity Manager",
       "options": {
-        "baseURL": "http://127.0.0.1:8045/v1",
+        "baseURL": "http://127.0.0.1:8045/v1beta",
         "apiKey": "${ANTIGRAVITY_MANAGER_API_KEY}"
       },
       "models": {
@@ -43,17 +43,17 @@
           "name": "Claude Opus 4.5 Thinking",
           "limit": { "context": 200000, "output": 64000 },
           "options": {
-            "thinking": { "type": "enabled", "budgetTokens": 10000 }
+            "thinkingConfig": { "thinkingBudget": 10000 }
           },
           "variants": {
             "low": {
               "options": {
-                "thinking": { "type": "enabled", "budgetTokens": 8192 }
+                "thinkingConfig": { "thinkingBudget": 8192 }
               }
             },
             "max": {
               "options": {
-                "thinking": { "type": "enabled", "budgetTokens": 32768 }
+                "thinkingConfig": { "thinkingBudget": 32768 }
               }
             }
           }
@@ -62,22 +62,22 @@
           "name": "Claude Sonnet 4.5 Thinking",
           "limit": { "context": 200000, "output": 64000 },
           "options": {
-            "thinking": { "type": "enabled", "budgetTokens": 10000 }
+            "thinkingConfig": { "thinkingBudget": 10000 }
           },
           "variants": {
             "low": {
               "options": {
-                "thinking": { "type": "enabled", "budgetTokens": 8192 }
+                "thinkingConfig": { "thinkingBudget": 8192 }
               }
             },
             "medium": {
               "options": {
-                "thinking": { "type": "enabled", "budgetTokens": 16384 }
+                "thinkingConfig": { "thinkingBudget": 16384 }
               }
             },
             "high": {
               "options": {
-                "thinking": { "type": "enabled", "budgetTokens": 32768 }
+                "thinkingConfig": { "thinkingBudget": 32768 }
               }
             }
           }
