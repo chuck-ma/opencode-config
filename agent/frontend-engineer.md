@@ -1,7 +1,7 @@
 ---
 description: 前端系统专家，专注于 React/Vue/Next.js、CSS/Tailwind、TypeScript、状态管理及性能优化
 mode: subagent
-model: google/gemini-3-flash-preview
+model: antigravity_manager/gemini-3-flash
 reasoningEffort: medium
 tools:
   write: true
