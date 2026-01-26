@@ -174,11 +174,13 @@ curl -s -H "Authorization: Bearer sk-your-api-key-here" http://127.0.0.1:8317/v1
 }
 ```
 
-设置环境变量：
+设置环境变量（添加到 `~/.zshrc` 或 `~/.zprofile`）：
 
 ```bash
 export CLIPROXY_API_KEY="sk-your-api-key-here"
 ```
+
+> **注意**：OpenCode 使用 `{env:VAR}` 语法读取环境变量，而非 `${VAR}`。也支持 `{file:path}` 读取文件内容。
 
 安装依赖：
 
@@ -202,6 +204,13 @@ CLIProxyAPI 配置 `host: ""` 后，局域网内设备可通过本机 IP 访问�
 |------|-----|
 | API Base URL | `http://<本机IP>:8317/v1` |
 | API Key | 配置文件中的 `api-keys` |
+
+验证局域网访问：
+
+```bash
+LOCAL_IP=$(ipconfig getifaddr en0)
+curl -s -H "Authorization: Bearer sk-your-api-key-here" "http://${LOCAL_IP}:8317/v1/models" | jq '.data[].id'
+```
 
 ### 2.9 其他安装方式（可选）
 
