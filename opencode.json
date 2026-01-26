@@ -20,6 +20,7 @@
       "models": {
         "claude-sonnet-4-5-20250929": {
           "limit": { "context": 200000, "output": 64000 },
+          "modalities": { "input": ["text", "image"], "output": ["text"] },
           "options": {
             "thinking": { "type": "enabled", "budgetTokens": 16000 }
           },
@@ -30,6 +31,7 @@
         },
         "claude-opus-4-5-20251101": {
           "limit": { "context": 200000, "output": 64000 },
+          "modalities": { "input": ["text", "image"], "output": ["text"] },
           "options": {
             "thinking": { "type": "enabled", "budgetTokens": 16000 }
           },
@@ -39,7 +41,8 @@
           }
         },
         "claude-haiku-4-5-20251001": {
-          "limit": { "context": 200000, "output": 64000 }
+          "limit": { "context": 200000, "output": 64000 },
+          "modalities": { "input": ["text", "image"], "output": ["text"] }
         }
       }
     },
