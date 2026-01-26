@@ -50,30 +50,160 @@ bunx oh-my-opencode install --no-tui --claude=max20 --chatgpt=yes --gemini=yes
 
 ## 第二步：安装 CLIProxyAPI（本地 Claude/Gemini 代理）
 
-CLIProxyAPI 用于本地转发 Claude 4.5（以及其他模型），提供 OpenAI-compatible 接口。
+CLIProxyAPI 用于本地转发 Claude 4.5（以及其他模型），提供 OpenAI-compatible 和 Anthropic-compatible 接口。
 
 ### 2.1 安装与启动（Homebrew 推荐）
 
 ```bash
 brew install cliproxyapi
-brew services start cliproxyapi
 ```
 
-### 2.2 配置文件与鉴权
+### 2.2 登录 Claude Code OAuth
 
-- 配置文件默认路径：`/opt/homebrew/etc/cliproxyapi.conf`
-- 认证目录默认路径：`~/.cli-proxy-api`
-- 配置规范参考：`https://help.router-for.me/cn/configuration/basic.html`
-- 如需免 API Key，设置 `api-keys: []` 并重启服务
+```bash
+cliproxyapi --claude-login
+```
 
-> 需要自定义配置路径时，用 `cliproxyapi --config /path/to/config.yaml`。
+浏览器会自动打开 Anthropic 授权页面，完成授权后凭证自动保存到 `~/.cli-proxy-api`。
 
-### 2.3 端口与验证
+### 2.3 配置文件
 
-- 代理端口：`http://localhost:8317/v1`
-- 建议配置 API Key 后再接入 OpenCode
+创建配置文件 `~/.cli-proxy-api/config.yaml`：
 
-### 2.4 其他安装方式（可选）
+```yaml
+host: ""
+port: 8317
+auth-dir: "~/.cli-proxy-api"
+api-keys:
+  - "sk-your-api-key-here"
+remote-management:
+  allow-remote: false
+  secret-key: "your-management-secret"
+debug: false
+```
+
+配置说明：
+- `host: ""`：绑定所有接口（允许局域网访问）
+- `api-keys`：客户端访问密钥
+- `remote-management.secret-key`：管理面板密钥（访问 `http://localhost:8317/management.html`）
+
+### 2.4 启动服务
+
+**方式 1：使用 Homebrew 服务**
+
+需要自定义 launchd plist 以指定配置路径：
+
+```bash
+cat > ~/Library/LaunchAgents/homebrew.mxcl.cliproxyapi.plist << 'EOF'
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>KeepAlive</key><true/>
+  <key>Label</key><string>homebrew.mxcl.cliproxyapi</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/opt/homebrew/opt/cliproxyapi/bin/cliproxyapi</string>
+    <string>--config</string>
+    <string>/Users/YOUR_USERNAME/.cli-proxy-api/config.yaml</string>
+  </array>
+  <key>RunAtLoad</key><true/>
+</dict>
+</plist>
+EOF
+
+launchctl load ~/Library/LaunchAgents/homebrew.mxcl.cliproxyapi.plist
+```
+
+**方式 2：手动启动**
+
+```bash
+cliproxyapi --config ~/.cli-proxy-api/config.yaml
+```
+
+### 2.5 验证服务
+
+```bash
+curl -s -H "Authorization: Bearer sk-your-api-key-here" http://127.0.0.1:8317/v1/models | jq '.data[].id'
+```
+
+应输出可用模型列表：
+```
+"claude-sonnet-4-5-20250929"
+"claude-opus-4-5-20251101"
+"claude-haiku-4-5-20251001"
+...
+```
+
+### 2.6 配置 OpenCode 使用 CLIProxyAPI
+
+在 `opencode.json` 的 `provider` 中添加 `cliproxy`：
+
+```json
+"cliproxy": {
+  "npm": "@ai-sdk/anthropic",
+  "options": {
+    "baseURL": "http://127.0.0.1:8317/v1",
+    "apiKey": "{env:CLIPROXY_API_KEY}"
+  },
+  "models": {
+    "claude-sonnet-4-5-20250929": {
+      "limit": { "context": 200000, "output": 64000 },
+      "options": {
+        "thinking": { "type": "enabled", "budgetTokens": 16000 }
+      },
+      "variants": {
+        "low": { "options": { "thinking": { "type": "enabled", "budgetTokens": 8192 } } },
+        "high": { "options": { "thinking": { "type": "enabled", "budgetTokens": 32768 } } }
+      }
+    },
+    "claude-opus-4-5-20251101": {
+      "limit": { "context": 200000, "output": 64000 },
+      "options": {
+        "thinking": { "type": "enabled", "budgetTokens": 16000 }
+      },
+      "variants": {
+        "low": { "options": { "thinking": { "type": "enabled", "budgetTokens": 8192 } } },
+        "max": { "options": { "thinking": { "type": "enabled", "budgetTokens": 32768 } } }
+      }
+    },
+    "claude-haiku-4-5-20251001": {
+      "limit": { "context": 200000, "output": 64000 }
+    }
+  }
+}
+```
+
+设置环境变量：
+
+```bash
+export CLIPROXY_API_KEY="sk-your-api-key-here"
+```
+
+安装依赖：
+
+```bash
+cd ~/.config/opencode && npm install @ai-sdk/anthropic
+```
+
+### 2.7 使用方式
+
+```
+/model cliproxy/claude-opus-4-5-20251101
+/model cliproxy/claude-opus-4-5-20251101:max   # 32K thinking budget
+/model cliproxy/claude-sonnet-4-5-20250929:high
+```
+
+### 2.8 局域网共享
+
+CLIProxyAPI 配置 `host: ""` 后，局域网内设备可通过本机 IP 访问：
+
+| 项目 | 值 |
+|------|-----|
+| API Base URL | `http://<本机IP>:8317/v1` |
+| API Key | 配置文件中的 `api-keys` |
+
+### 2.9 其他安装方式（可选）
 
 ```bash
 git clone https://github.com/router-for-me/CLIProxyAPI.git
@@ -122,9 +252,9 @@ export ANTIGRAVITY_MANAGER_API_KEY="your-api-key"
 
 在 `opencode.json` 的 `provider` 中添加 `antigravity_manager` 配置：
 
-- **npm**: 使用 `@ai-sdk/anthropic` SDK
+- **npm**: 使用 `@ai-sdk/google` SDK
 - **baseURL**: 指向本地 Antigravity Manager 服务
-- **thinking 配置**: 使用 Anthropic SDK 格式 `{ "type": "enabled", "budgetTokens": N }`
+- **thinking 配置**: 使用 Google SDK 格式 `{ "thinkingBudget": N }`
 
 **重要**: Anthropic SDK 的 thinking 配置格式与 Google SDK 不同：
 

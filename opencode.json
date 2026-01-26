@@ -5,12 +5,44 @@
     "skill": "allow"
   },
   "plugin": [
-    "oh-my-opencode@3.0.0-beta.13",
+    "oh-my-opencode@3.0.0-beta.16",
     "opencode-openai-codex-auth",
     "memory-bank-skill",
     "opencode-antigravity-auth@beta"
   ],
   "provider": {
+    "cliproxy": {
+      "npm": "@ai-sdk/anthropic",
+      "options": {
+        "baseURL": "http://127.0.0.1:8317/v1",
+        "apiKey": "{env:CLIPROXY_API_KEY}"
+      },
+      "models": {
+        "claude-sonnet-4-5-20250929": {
+          "limit": { "context": 200000, "output": 64000 },
+          "options": {
+            "thinking": { "type": "enabled", "budgetTokens": 16000 }
+          },
+          "variants": {
+            "low": { "options": { "thinking": { "type": "enabled", "budgetTokens": 8192 } } },
+            "high": { "options": { "thinking": { "type": "enabled", "budgetTokens": 32768 } } }
+          }
+        },
+        "claude-opus-4-5-20251101": {
+          "limit": { "context": 200000, "output": 64000 },
+          "options": {
+            "thinking": { "type": "enabled", "budgetTokens": 16000 }
+          },
+          "variants": {
+            "low": { "options": { "thinking": { "type": "enabled", "budgetTokens": 8192 } } },
+            "max": { "options": { "thinking": { "type": "enabled", "budgetTokens": 32768 } } }
+          }
+        },
+        "claude-haiku-4-5-20251001": {
+          "limit": { "context": 200000, "output": 64000 }
+        }
+      }
+    },
     "anthropic": {
       "models": {
         "claude-sonnet-4-5": {
@@ -36,7 +68,7 @@
       "name": "Antigravity Manager",
       "options": {
         "baseURL": "http://127.0.0.1:8045/v1beta",
-        "apiKey": "${ANTIGRAVITY_MANAGER_API_KEY}"
+        "apiKey": "{env:ANTIGRAVITY_MANAGER_API_KEY}"
       },
       "models": {
         "claude-opus-4-5-thinking": {
@@ -297,9 +329,9 @@
       "model": "google/antigravity-claude-opus-4-5-thinking"
     },
     "claude": {
-      "description": "使用 Claude 4.5 Thinking",
+      "description": "使用 Claude Opus 4.5 (CLIProxyAPI OAuth)",
       "mode": "primary",
-      "model": "antigravity_manager/claude-opus-4-5-thinking",
+      "model": "cliproxy/claude-opus-4-5-20251101",
       "tools": {
         "write": true,
         "edit": true,
