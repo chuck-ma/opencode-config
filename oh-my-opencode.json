@@ -7,7 +7,7 @@
     "librarian": {
       "model": "antigravity_manager/gemini-3-flash-online",
       "tools": {
-        "websearch_*": false
+        "websearch_web_search_exa": false
       }
     },
     "explore": {
