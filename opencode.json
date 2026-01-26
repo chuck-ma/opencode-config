@@ -5,7 +5,7 @@
     "skill": "allow"
   },
   "plugin": [
-    "oh-my-opencode@3.0.0-beta.16",
+    "oh-my-opencode@3.1.0",
     "opencode-openai-codex-auth",
     "memory-bank-skill",
     "opencode-antigravity-auth@beta"
@@ -67,55 +67,37 @@
       }
     },
     "antigravity_manager": {
-      "npm": "@ai-sdk/google",
+      "npm": "@ai-sdk/anthropic",
       "name": "Antigravity Manager",
       "options": {
-        "baseURL": "http://127.0.0.1:8045/v1beta",
+        "baseURL": "http://127.0.0.1:8045/v1",
         "apiKey": "{env:ANTIGRAVITY_MANAGER_API_KEY}"
       },
       "models": {
+        "gemini-3-pro-high": {
+          "name": "Gemini 3 Pro High (Manager, Thinking)",
+          "limit": { "context": 1048576, "output": 65535 },
+          "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] }
+        },
+        "gemini-3-flash": {
+          "name": "Gemini 3 Flash (Manager)",
+          "limit": { "context": 1048576, "output": 65536 },
+          "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] }
+        },
+        "gemini-3-flash-online": {
+          "name": "Gemini 3 Flash + Search (Manager)",
+          "limit": { "context": 1048576, "output": 65536 },
+          "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] }
+        },
         "claude-opus-4-5-thinking": {
-          "name": "Claude Opus 4.5 Thinking",
+          "name": "Claude Opus 4.5 Thinking (Manager)",
           "limit": { "context": 200000, "output": 64000 },
-          "options": {
-            "thinkingConfig": { "thinkingBudget": 10000 }
-          },
-          "variants": {
-            "low": {
-              "options": {
-                "thinkingConfig": { "thinkingBudget": 8192 }
-              }
-            },
-            "max": {
-              "options": {
-                "thinkingConfig": { "thinkingBudget": 32768 }
-              }
-            }
-          }
+          "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] }
         },
         "claude-sonnet-4-5-thinking": {
-          "name": "Claude Sonnet 4.5 Thinking",
+          "name": "Claude Sonnet 4.5 Thinking (Manager)",
           "limit": { "context": 200000, "output": 64000 },
-          "options": {
-            "thinkingConfig": { "thinkingBudget": 10000 }
-          },
-          "variants": {
-            "low": {
-              "options": {
-                "thinkingConfig": { "thinkingBudget": 8192 }
-              }
-            },
-            "medium": {
-              "options": {
-                "thinkingConfig": { "thinkingBudget": 16384 }
-              }
-            },
-            "high": {
-              "options": {
-                "thinkingConfig": { "thinkingBudget": 32768 }
-              }
-            }
-          }
+          "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] }
         }
       }
     },
@@ -275,29 +257,6 @@
             "high": { "thinkingLevel": "high" }
           }
         },
-        "antigravity-claude-sonnet-4-5": {
-          "name": "Claude Sonnet 4.5 (Antigravity)",
-          "limit": { "context": 200000, "output": 64000 },
-          "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] }
-        },
-        "antigravity-claude-sonnet-4-5-thinking": {
-          "name": "Claude Sonnet 4.5 Thinking (Antigravity)",
-          "limit": { "context": 200000, "output": 64000 },
-          "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] },
-          "variants": {
-            "low": { "thinkingConfig": { "thinkingBudget": 8192 } },
-            "max": { "thinkingConfig": { "thinkingBudget": 32768 } }
-          }
-        },
-        "antigravity-claude-opus-4-5-thinking": {
-          "name": "Claude Opus 4.5 Thinking (Antigravity)",
-          "limit": { "context": 200000, "output": 64000 },
-          "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] },
-          "variants": {
-            "low": { "thinkingConfig": { "thinkingBudget": 8192 } },
-            "max": { "thinkingConfig": { "thinkingBudget": 32768 } }
-          }
-        },
         "gemini-2.5-flash": {
           "name": "Gemini 2.5 Flash (Gemini CLI)",
           "limit": { "context": 1048576, "output": 65536 },
@@ -325,11 +284,9 @@
     "codex": {
       "model": "openai/gpt-5.2-codex"
     },
-    "gemini-anti": {
-      "model": "google/gemini-3-flash-preview"
-    },
-    "claude-anti": {
-      "model": "google/antigravity-claude-opus-4-5-thinking"
+    "gemini": {
+      "description": "使用 Gemini 3 Pro High (Antigravity, Thinking)",
+      "model": "antigravity_manager/gemini-3-pro-high"
     },
     "claude": {
       "description": "使用 Claude Opus 4.5 (CLIProxyAPI OAuth)",

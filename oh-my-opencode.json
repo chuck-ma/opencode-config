@@ -1,28 +1,29 @@
 {
   "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-opencode/master/assets/oh-my-opencode.schema.json",
-  "google_auth": false,
   "agents": {
-    "Sisyphus": {
-      "model": "anthropic/claude-opus-4-5"
+    "sisyphus": {
+      "model": "cliproxy/claude-opus-4-5-20251101"
     },
     "librarian": {
-      "model": "google/antigravity-gemini-3-flash"
+      "model": "antigravity_manager/gemini-3-flash-online",
+      "tools": {
+        "websearch_*": false
+      }
     },
     "explore": {
-      "model": "google/antigravity-gemini-3-flash"
+      "model": "antigravity_manager/gemini-3-flash"
     },
     "frontend-ui-ux-engineer": {
-      "model": "google/antigravity-gemini-3-flash"
+      "model": "antigravity_manager/gemini-3-flash"
     },
     "document-writer": {
       "model": "anthropic/claude-opus-4-5"
     },
-
-    "Prometheus (Planner)": {
+    "prometheus": {
       "model": "openai/gpt-5.2"
     },
     "multimodal-looker": {
-      "model": "anthropic/claude-opus-4-5"
+      "model": "antigravity_manager/gemini-3-flash"
     }
   }
 }
