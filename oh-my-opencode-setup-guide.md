@@ -261,23 +261,70 @@ export ANTIGRAVITY_MANAGER_API_KEY="your-api-key"
 
 在 `opencode.json` 的 `provider` 中添加 `antigravity_manager` 配置：
 
-- **npm**: 使用 `@ai-sdk/google` SDK
-- **baseURL**: 指向本地 Antigravity Manager 服务
-- **thinking 配置**: 使用 Google SDK 格式 `{ "thinkingBudget": N }`
+- **npm**: 使用 `@ai-sdk/anthropic` SDK（推荐，避免 thinkingLevel 参数问题）
+- **baseURL**: 指向本地 Antigravity Manager 服务 `http://127.0.0.1:8045/v1`
 
-**重要**: Anthropic SDK 的 thinking 配置格式与 Google SDK 不同：
+**重要**: Antigravity Manager 根据**模型名称**自动启用 Thinking 和 Google Search 功能，**忽略客户端的 thinking 参数**。
 
-| SDK | 格式 |
-|-----|------|
-| `@ai-sdk/anthropic` | `"thinking": { "type": "enabled", "budgetTokens": 10000 }` |
-| `@ai-sdk/google` | `"thinkingConfig": { "thinkingBudget": 10000, "includeThoughts": true }` |
+### 3B.4 Thinking 模型
 
-### 3B.4 可用模型
+Antigravity Manager 检测模型名称来决定是否启用 Thinking：
 
-| 模型 | 说明 | Variants |
-|------|------|----------|
-| `claude-opus-4-5-thinking` | Claude Opus 4.5 with Extended Thinking | `low` (8K), `max` (32K) |
-| `claude-sonnet-4-5-thinking` | Claude Sonnet 4.5 with Extended Thinking | `low` (8K), `medium` (16K), `high` (32K) |
+| 模型名称 | Thinking | 说明 |
+|----------|----------|------|
+| `gemini-3-pro-high` | ✅ 自动启用 | 高 thinking budget |
+| `gemini-3-pro-low` | ✅ 自动启用 | 低 thinking budget |
+| `claude-opus-4-5-thinking` | ✅ 自动启用 | Claude Opus 4.5 |
+| `claude-sonnet-4-5-thinking` | ✅ 自动启用 | Claude Sonnet 4.5 |
+| `gemini-3-flash` | ❌ 无 thinking | 快速模型 |
+
+**注意**: 在 `opencode.json` 中配置 `thinking` 参数对 Antigravity Manager **无效**，必须使用正确的模型名称。
+
+### 3B.5 Google Search (联网搜索)
+
+Antigravity Manager 支持 Google Search (Grounding) 功能，有两种启用方式：
+
+1. **`-online` 后缀**: 在模型名称后添加 `-online`，如 `gemini-3-flash-online`
+2. **请求中包含 web_search 工具**: Claude Code 等工具会自动添加
+
+| 模型名称 | 功能 |
+|----------|------|
+| `gemini-3-flash-online` | Gemini 3 Flash + Google Search |
+| `gemini-3-pro-high-online` | Gemini 3 Pro High + Google Search (不推荐，Thinking 和 Search 不兼容) |
+
+**限制**: 
+- 使用 `-online` 后缀时，模型会**降级到 `gemini-2.5-flash`**（目前只有它支持 googleSearch 工具）
+- Thinking 和 Google Search **不兼容**，启用 Search 会禁用 Thinking
+
+### 3B.6 推荐配置
+
+```json
+"antigravity_manager": {
+  "npm": "@ai-sdk/anthropic",
+  "name": "Antigravity Manager",
+  "options": {
+    "baseURL": "http://127.0.0.1:8045/v1",
+    "apiKey": "{env:ANTIGRAVITY_MANAGER_API_KEY}"
+  },
+  "models": {
+    "gemini-3-pro-high": {
+      "name": "Gemini 3 Pro High (Thinking)",
+      "limit": { "context": 1048576, "output": 65535 },
+      "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] }
+    },
+    "gemini-3-flash": {
+      "name": "Gemini 3 Flash",
+      "limit": { "context": 1048576, "output": 65536 },
+      "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] }
+    },
+    "gemini-3-flash-online": {
+      "name": "Gemini 3 Flash + Search",
+      "limit": { "context": 1048576, "output": 65536 },
+      "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] }
+    }
+  }
+}
+```
 
 ### 3B.5 使用示例
 
