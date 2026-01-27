@@ -4,6 +4,16 @@
 我们正在配置并记录 OpenCode 设置。已完成指南更新和配置文件的版本控制。
 
 ## 最近进展
+- **opencode-google-search 插件开发 (2026-01-27)**：
+  - 设计并实现了 `opencode-google-search` 插件，包装 Antigravity Manager 的 `-online` 模型
+  - 核心思路：利用 `gemini-3-flash-online` 模型内置的 Google Search Grounding
+  - 比参考实现 (`opencode-google-antigravity-auth`) 简化 90%：无需 OAuth、无需原生 `googleSearch` 工具注入
+  - 发布到 npm: `opencode-google-search@0.1.4`
+  - 设计文档: `docs/design-google-search-plugin.md`
+  - **关键经验**：OpenCode 工具覆盖机制是 **后加载覆盖先加载**
+    - 必须把插件放在 `opencode-antigravity-auth` 之后
+    - 工具名必须保持 `google_search` 才能覆盖
+    - 安装方式：只需在 `opencode.json` 添加 `"opencode-google-search@0.1.4"`，自动安装
 - **Librarian 搜索配置 (2026-01-26)**：
   - 为 `librarian` agent 禁用 Exa 搜索工具 (`websearch_web_search_exa: false`)。
   - 配置后 librarian 使用 Google Search（通过 `google_search` 工具或 `-online` 模型的 Grounding）。
