@@ -8,7 +8,7 @@
   - 为 `librarian` agent 禁用 Exa 搜索工具 (`websearch_web_search_exa: false`)。
   - 配置后 librarian 使用 Google Search（通过 `google_search` 工具或 `-online` 模型的 Grounding）。
   - 关键发现：`opencode run --model=X` 不走 agent 配置，必须用 `--agent=X`。
-  - 新增文档 `learnings/opencode-search-config.md` 记录搜索配置指南。
+  - 更新 `learnings/antigravity-v1.3-features.md` 记录搜索配置、Thinking 模式、per-agent 工具限制。
 - **配置更新 (2026-01-26)**：
   - 为 `cliproxy` 模型补充 `modalities` 配置（text/image 输入，text 输出）。
 - **初始化**：完成 Memory Bank 结构初始化。
