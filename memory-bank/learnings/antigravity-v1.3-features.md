@@ -1,7 +1,144 @@
-# opencode-antigravity-auth v1.3.0 新功能配置
+# opencode-antigravity-auth 配置指南
 
-**日期**: 2026-01-18  
-**来源**: https://github.com/NoeFabris/opencode-antigravity-auth/releases/tag/v1.3.0
+**日期**: 2026-01-18 (v1.3.0), 2026-01-26 更新  
+**来源**: https://github.com/NoeFabris/opencode-antigravity-auth
+
+## 概览
+
+`opencode-antigravity-auth` 插件提供：
+- **OAuth 认证**：通过 Google 账号使用 Antigravity 服务
+- **模型访问**：Gemini 3 系列、Claude Thinking 模型
+- **工具**：`google_search`（Google Search + URL 分析）
+- **Thinking 支持**：Gemini 和 Claude 的扩展思考模式
+
+## 可用模型
+
+| 模型 | Variants | 说明 |
+|------|----------|------|
+| `google/antigravity-gemini-3-pro` | low, high | Gemini 3 Pro + Thinking |
+| `google/antigravity-gemini-3-flash` | minimal, low, medium, high | Gemini 3 Flash + Thinking |
+| `google/antigravity-claude-sonnet-4-5-thinking` | low, max | Claude Sonnet + 扩展思考 |
+| `google/antigravity-claude-opus-4-5-thinking` | low, max | Claude Opus + 扩展思考 |
+
+**使用 variant**:
+```bash
+opencode run "Hello" --model=google/antigravity-gemini-3-flash --variant=high
+```
+
+## Gemini Thinking 配置
+
+在 `opencode.json` 中配置 Gemini 思考级别：
+
+```json
+{
+  "provider": {
+    "google": {
+      "models": {
+        "antigravity-gemini-3-pro": {
+          "variants": {
+            "low": { "thinkingLevel": "low" },
+            "high": { "thinkingLevel": "high" }
+          }
+        },
+        "antigravity-gemini-3-flash": {
+          "variants": {
+            "minimal": { "thinkingLevel": "minimal" },
+            "low": { "thinkingLevel": "low" },
+            "medium": { "thinkingLevel": "medium" },
+            "high": { "thinkingLevel": "high" }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+## Claude Thinking 配置
+
+```json
+{
+  "provider": {
+    "google": {
+      "models": {
+        "antigravity-claude-sonnet-4-5-thinking": {
+          "variants": {
+            "low": { "thinkingConfig": { "thinkingBudget": 8192 } },
+            "max": { "thinkingConfig": { "thinkingBudget": 32768 } }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+---
+
+## 搜索工具：Exa vs Google Search
+
+OpenCode 中有两个独立的搜索系统：
+
+| 搜索系统 | 来源 | 工具名称 | 触发方式 |
+|----------|------|----------|----------|
+| **Exa Search** | `oh-my-opencode` 插件 | `websearch_web_search_exa` | 模型主动调用 |
+| **Google Search** | `opencode-antigravity-auth` | `google_search` | 模型调用或 `-online` 后缀 |
+
+### 问题：Exa 优先级高于 Google
+
+当两者都启用时，OpenCode 会优先使用 Exa 拦截搜索请求，导致 `-online` 模型的 Google Search Grounding 不生效。
+
+### 解决方案：Per-Agent 禁用 Exa
+
+在 `opencode.json` 中为特定 agent 禁用 Exa：
+
+```json
+{
+  "agent": {
+    "librarian": {
+      "model": "antigravity_manager/gemini-3-flash-online",
+      "tools": {
+        "websearch_web_search_exa": false
+      }
+    }
+  }
+}
+```
+
+同时在 `oh-my-opencode.json` 中配置：
+
+```json
+{
+  "agents": {
+    "librarian": {
+      "model": "antigravity_manager/gemini-3-flash-online",
+      "tools": {
+        "websearch_web_search_exa": false
+      }
+    }
+  }
+}
+```
+
+### 关键发现
+
+`opencode run --model=X` **不走 agent 配置**！必须用 `--agent=X` 测试：
+
+```bash
+# 错误：不走 agent 配置
+opencode run "查询" --model=antigravity_manager/gemini-3-flash-online
+
+# 正确：使用 agent 配置
+opencode run "查询" --agent=librarian
+```
+
+### 工具名称匹配语法
+
+- 精确名称：`"websearch_web_search_exa": false`
+- Glob 模式：`"websearch_*": false`
+- MCP 工具：`"mymcp_*": false`
+
+---
 
 ## 1. Google Search Grounding（Web 搜索）
 
