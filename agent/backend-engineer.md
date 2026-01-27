@@ -1,7 +1,7 @@
 ---
 description: 后端系统专家，专注于 API 设计、数据库优化、Python/Go/Node 服务及生产级服务器架构
 mode: subagent
-model: google/antigravity-claude-sonnet-4-5-thinking
+model: cliproxy/claude-sonnet-4-5-20250929
 temperature: 0.2
 reasoningEffort: medium
 tools:
