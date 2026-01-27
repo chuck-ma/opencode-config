@@ -1,0 +1,38 @@
+{
+  "name": "opencode-google-search",
+  "version": "0.1.4",
+  "description": "OpenCode plugin for Google Search via Antigravity Manager",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "files": [
+    "dist/",
+    "index.ts",
+    "src/",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "bun build index.ts src/plugin.ts --outdir dist --target bun && mv dist/src/plugin.js dist/plugin.js && rm -rf dist/src",
+    "prepublishOnly": "bun run build"
+  },
+  "keywords": [
+    "opencode",
+    "plugin",
+    "google",
+    "search",
+    "antigravity",
+    "gemini"
+  ],
+  "author": "chuck-ma",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chuck-ma/opencode-config.git"
+  },
+  "peerDependencies": {
+    "@opencode-ai/plugin": "^1.1.36"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  }
+}
