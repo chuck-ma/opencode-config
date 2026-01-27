@@ -5,10 +5,7 @@
       "model": "cliproxy/claude-opus-4-5-20251101"
     },
     "librarian": {
-      "model": "antigravity_manager/gemini-3-flash-online",
-      "tools": {
-        "websearch_web_search_exa": false
-      }
+      "model": "antigravity_manager/gemini-3-flash",
     },
     "explore": {
       "model": "antigravity_manager/gemini-3-flash"
