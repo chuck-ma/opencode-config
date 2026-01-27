@@ -5,9 +5,8 @@
     "skill": "allow"
   },
   "plugin": [
-    "oh-my-opencode@3.1.0",
+    "oh-my-opencode@3.1.2",
     "opencode-openai-codex-auth",
-    "memory-bank-skill",
     "opencode-antigravity-auth@beta"
   ],
   "provider": {
@@ -86,6 +85,11 @@
         },
         "gemini-3-flash-online": {
           "name": "Gemini 3 Flash + Search (Manager)",
+          "limit": { "context": 1048576, "output": 65536 },
+          "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] }
+        },
+        "gemini-2.5-flash": {
+          "name": "Gemini 2.5 Flash (Manager)",
           "limit": { "context": 1048576, "output": 65536 },
           "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] }
         },
@@ -281,12 +285,6 @@
     }
   },
   "agent": {
-    "librarian": {
-      "model": "antigravity_manager/gemini-3-flash-online",
-      "tools": {
-        "websearch_web_search_exa": false
-      }
-    },
     "codex": {
       "model": "openai/gpt-5.2-codex"
     },
