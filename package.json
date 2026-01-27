@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "@ai-sdk/anthropic": "^3.0.23"
+    "@ai-sdk/anthropic": "^3.0.23",
+    "opencode-google-search": "0.1.2"
   }
 }
