@@ -5,7 +5,7 @@
       "model": "cliproxy/claude-opus-4-5-20251101"
     },
     "librarian": {
-      "model": "antigravity_manager/gemini-3-flash",
+      "model": "antigravity_manager/gemini-3-flash"
     },
     "explore": {
       "model": "antigravity_manager/gemini-3-flash"
@@ -21,6 +21,10 @@
     },
     "multimodal-looker": {
       "model": "antigravity_manager/gemini-3-flash"
+    },
+    "oracle": {
+      "model": "openai/gpt-5.2",
+      "reasoningEffort": "high"
     }
   }
 }
