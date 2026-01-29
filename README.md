@@ -5,6 +5,7 @@
 ## 包含内容
 
 - 安装与配置指南：`oh-my-opencode-setup-guide.md`
+- FRP 内网穿透指南：`frp-setup-guide.md`
 - OpenCode 配置：`opencode.json`
 - Oh My OpenCode Agent 配置：`oh-my-opencode.json`
 - Antigravity Auth 配置：`antigravity.json`
