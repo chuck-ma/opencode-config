@@ -5,10 +5,10 @@
     "skill": "allow"
   },
   "plugin": [
-    "oh-my-opencode@3.1.6",
+    "oh-my-opencode@3.1.8",
     "opencode-openai-codex-auth",
-    "opencode-antigravity-auth@1.3.2",
-    "memory-bank-skill@5.15.0",
+    "opencode-antigravity-auth@beta",
+    "memory-bank-skill@5.18.0",
     "opencode-google-search@0.1.4"
   ],
   "provider": {
