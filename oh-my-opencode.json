@@ -1,5 +1,8 @@
 {
   "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-opencode/master/assets/oh-my-opencode.schema.json",
+  "browser_automation_engine": {
+    "provider": "agent-browser"
+  },
   "agents": {
     "sisyphus": {
       "model": "cliproxy/claude-opus-4-5-20251101"

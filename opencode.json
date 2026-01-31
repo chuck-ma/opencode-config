@@ -5,7 +5,7 @@
     "skill": "allow"
   },
   "plugin": [
-    "oh-my-opencode@3.1.8",
+    "oh-my-opencode@3.1.10",
     "opencode-openai-codex-auth",
     "opencode-antigravity-auth@beta",
     "memory-bank-skill@5.18.0",
@@ -225,6 +225,30 @@
             "output": [
               "text"
             ]
+          },
+          "options": {
+            "thinking": {
+              "type": "enabled",
+              "budgetTokens": 16000
+            }
+          },
+          "variants": {
+            "low": {
+              "options": {
+                "thinking": {
+                  "type": "enabled",
+                  "budgetTokens": 8192
+                }
+              }
+            },
+            "max": {
+              "options": {
+                "thinking": {
+                  "type": "enabled",
+                  "budgetTokens": 32768
+                }
+              }
+            }
           }
         },
         "claude-sonnet-4-5-thinking": {

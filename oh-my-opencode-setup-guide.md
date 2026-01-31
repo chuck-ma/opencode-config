@@ -342,6 +342,52 @@ Antigravity Manager 支持 Google Search (Grounding) 功能，有两种启用方
 
 ---
 
+## 第四步 B（可选）：配置浏览器自动化引擎
+
+Oh-My-OpenCode 提供两种浏览器自动化方案，通过 `browser_automation_engine.provider` 配置：
+
+### Option 1: Playwright MCP（默认）
+
+默认使用 Playwright MCP 服务器，无需额外配置。
+
+**使用方式**：
+```
+/playwright Navigate to example.com and take a screenshot
+```
+
+### Option 2: Agent Browser CLI（Vercel）
+
+使用 [Vercel 的 agent-browser CLI](https://github.com/vercel-labs/agent-browser)。
+
+**安装**：
+```bash
+bun add -g agent-browser
+```
+
+**配置** `~/.config/opencode/oh-my-opencode.json`：
+```json
+{
+  "browser_automation_engine": {
+    "provider": "agent-browser"
+  }
+}
+```
+
+**使用方式**：
+```
+Use agent-browser to navigate to example.com and extract the main heading
+```
+
+### 功能（两种方案通用）
+
+- 导航和交互网页
+- 截图和 PDF 导出
+- 表单填写和元素点击
+- 等待网络请求
+- 内容抓取
+
+---
+
 ## 第五步：配置多账号轮询调度（可选）
 
 当你有多个 Google 账号时，可以启用多账号轮询调度，实现：
