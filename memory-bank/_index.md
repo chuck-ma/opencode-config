@@ -7,3 +7,4 @@
 - learnings/antigravity-v1.3-features.md：opencode-antigravity-auth 完整配置指南（模型、Thinking、搜索、per-agent 工具限制）
 - learnings/opencode-session-management.md：OpenCode 会话管理常用命令 (list, export, TUI)
 - learnings/opencode-plugin-upgrade.md：OpenCode 插件升级与验证步骤
+- learnings/agent-browser-setup.md：Agent Browser 安装与故障排除指南（权限修复、浏览器安装、CAPTCHA 规避）
